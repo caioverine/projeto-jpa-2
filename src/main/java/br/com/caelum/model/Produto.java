@@ -1,6 +1,7 @@
 
 package br.com.caelum.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -8,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
@@ -32,12 +35,23 @@ public class Produto {
 	@Min(20)
 	private double preco;
 	
+	@ManyToMany
+	private List<Categoria> categorias = new ArrayList<>();
+	
 	
 	@Valid
 	@ManyToOne
 	private Loja loja;
 	
 	
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
 	public String getDescricao() {
 		return descricao;
 	}
@@ -48,11 +62,11 @@ public class Produto {
 	
 	//método auxiliar para associar categorias com o produto
 	//se funcionar apos ter definido o relacionamento entre produto e categoria
-//	public void adicionarCategorias(Categoria... categorias) {
-//		for (Categoria categoria : categorias) {
-//			this.categorias.add(categoria);
-//		}
-//	}
+	public void adicionarCategorias(Categoria... categorias) {
+		for (Categoria categoria : categorias) {
+			this.categorias.add(categoria);
+		}
+	}
 
 	public String getLinkDaFoto() {
 		return linkDaFoto;
